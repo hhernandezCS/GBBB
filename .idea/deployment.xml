@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="smartin@produccion">
+    <serverData>
+      <paths name="gbbb@produccion">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/capsoftsys/Backend" local="$PROJECT_DIR$/Backend" web="/" />
+            <mapping deploy="/public_html/capsoftsys/Frontend" local="$PROJECT_DIR$/Frontend" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="smartin@produccion">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/capsoftsys/Backend" local="$PROJECT_DIR$/Backend" web="/" />
+            <mapping deploy="/public_html/capsoftsys/Frontend" local="$PROJECT_DIR$/Frontend" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

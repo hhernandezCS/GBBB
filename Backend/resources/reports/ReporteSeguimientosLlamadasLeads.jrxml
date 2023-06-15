@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CatalogoCuentasContables" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe529a5d-5d8a-402e-8597-c5d9afb69765">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CapSoftSysCmaDevelop"/>
+	<parameter name="id_empresa" class="java.lang.Integer"/>
+	<parameter name="nombre_empresa" class="java.lang.String"/>
+	<parameter name="logo_empresa" class="java.lang.String"/>
+	<parameter name="fecha_inicial" class="java.util.Date"/>
+	<parameter name="fecha_final" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[select ld.* ,
+(case when sl.estado_seguimiento = 0 then 'Efectivo' when sl.estado_seguimiento = 1 then 'No efectivo' when sl.estado_seguimiento = 2 then 'Descartado' when sl.estado_seguimiento = 3 then 'No interesado' else 'Otro' end )as estado_seguimiento,
+(case when sl.tipo_contacto = 1 then 'Llamada' when sl.tipo_contacto = 2 then 'Mensaje' when sl.tipo_contacto = 3 then 'Correo' else 'Otro' end)as tipo_contacto,
+(case when sl.valoracion_contacto = 1 then 'Ocupado' when sl.valoracion_contacto = 2 then 'Interesado' when sl.valoracion_contacto = 3 then 'Muy interesado' when sl.valoracion_contacto = 4 then 'No interesado' else 'Otro' end)as valoracion_contacto,
+(case when sl.idioma_llamada = 1 then 'Español' when sl.idioma_llamada = 2 then 'Ingles' else 'Otro' end)as idioma_llamada,
+(case when sl.estado_comunicacion = 1 then 'Efectivo' when sl.estado_comunicacion = 2 then 'No efectivo' else 'Otro'end)as estado_comunicacion,
+(cll.descripcion)as clasificacion_llamada, (sl.f_creacion)as f_creacion_actividad, sl.f_actividad
+from crm.leads ld
+	inner join crm.seguimientos_leads sl
+		on sl.id_lead = ld.id_lead
+	inner join crm.clasificacion_llamadas cll
+		on cll.id_clasificacion_llamada = sl.id_clasificacion_llamada
+where ld.estado = 2 and  sl.estado = 1 and ld.id_empresa = $P{id_empresa} and sl.f_actividad between $P{fecha_inicial}  and $P{fecha_final}
+group by ld.u_responsable, ld.id_lead, sl.estado_seguimiento, sl.tipo_contacto, sl.valoracion_contacto, sl.idioma_llamada, sl.estado_comunicacion, cll.descripcion, sl.f_creacion, sl.f_actividad
+order by sl.f_actividad asc]]>
+	</queryString>
+	<field name="id_lead" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_lead"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="cargo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cargo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="email_contacto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_contacto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="telefono_trabajo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono_trabajo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="telefono_movil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono_movil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="nombre_compañia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_compañia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="email_compañia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_compañia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="web_site" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="web_site"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_pais" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_pais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_departamento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_departamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_municipio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_municipio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="codigo_postal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_postal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="facebook" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="facebook"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="instagram" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="instagram"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="google_my_business" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="google_my_business"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="yelp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="yelp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_giro_negocio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_giro_negocio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="informacion_empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="informacion_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="detalle_servicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="detalle_servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="zona_servicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="zona_servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="horario_servicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="horario_servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_origen_lead" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_origen_lead"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="servicio_necesitado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="servicio_necesitado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="comentario_lead" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="comentario_lead"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="u_creacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="u_creacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="f_creacion" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="f_creacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="f_modificacion" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="f_modificacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="u_modificacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="u_modificacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="u_responsable" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="u_responsable"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="descripcion_lead" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descripcion_lead"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="codigo_prospecto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_prospecto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="extranjero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="extranjero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="secuencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="secuencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_empresa" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="estado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_estado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="id_ciudad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_ciudad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="twitter" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="twitter"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="telefono_compañia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono_compañia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="url_origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="url_origen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="direccion_compañia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion_compañia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="f_descarta" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="f_descarta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="leads"/>
+	</field>
+	<field name="estado_seguimiento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado_seguimiento"/>
+	</field>
+	<field name="tipo_contacto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_contacto"/>
+	</field>
+	<field name="valoracion_contacto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="valoracion_contacto"/>
+	</field>
+	<field name="idioma_llamada" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="idioma_llamada"/>
+	</field>
+	<field name="estado_comunicacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado_comunicacion"/>
+	</field>
+	<field name="clasificacion_llamada" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clasificacion_llamada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clasificacion_llamadas"/>
+	</field>
+	<field name="f_creacion_actividad" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="f_creacion_actividad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seguimientos_leads"/>
+	</field>
+	<field name="f_actividad" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="f_actividad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seguimientos_leads"/>
+	</field>
+	<group name="u_responsable">
+		<groupExpression><![CDATA[$F{u_responsable}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="0" y="0" width="572" height="21" uuid="904e9dce-1fba-4ff7-8523-56e04ee365c6"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{u_responsable}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="84" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="20" y="17" width="50" height="50" uuid="91bd9eb3-7599-4e77-bcfb-a15fe70221dd"/>
+				<imageExpression><![CDATA[$P{logo_empresa}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="30" width="572" height="30" uuid="833865de-1364-4a31-8269-fb4c06ed356f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre_empresa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="572" height="30" uuid="411a4eba-2d61-4e11-be36-9a7c746aaa63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Reporte Seguimiento de llamadas del: " + new SimpleDateFormat("dd/MM/yyyy").format($P{fecha_inicial}) + " al " + new SimpleDateFormat("dd/MM/yyyy").format($P{fecha_final})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="90" height="20" uuid="23dac1a4-1d47-4ff2-9901-72ec01e881d5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8adb00e9-9457-4d4b-b13c-c621cc4129fd"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lead]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="150" height="20" uuid="6ae9ddd8-5e13-483c-aeed-fa224867b437">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4c39c2b-e7c6-4223-9e1a-c9f4103ea0b2"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Compañia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="122" height="20" uuid="8509b547-d122-4afc-b1b4-62d8e84d0f99">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40f04704-843d-4e4a-883c-bdf2da8f7b0c"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="110" height="20" uuid="e45aad80-5be9-4079-ad4a-02e278b3885d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40f04704-843d-4e4a-883c-bdf2da8f7b0c"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. Creacion Act]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="20" uuid="6be98bd8-7836-4fe2-a674-81ddb0ab6b4a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40f04704-843d-4e4a-883c-bdf2da8f7b0c"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. Actividad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="90" height="20" uuid="71ce4284-dc9e-43b2-abe3-3cfcf02e83f3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigo_prospecto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="150" height="20" uuid="10cc920c-4507-443a-a4fc-ce37b41927d9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_compañia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="122" height="20" uuid="16de7476-4404-49e6-8930-9998dc5f6c95"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{clasificacion_llamada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="20" uuid="d8fcfc18-9a89-4ffb-9110-07b6e62df95c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{f_actividad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="110" height="20" uuid="2a8c6c69-f522-45f3-abfc-f05729583972"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{f_creacion_actividad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="21" width="90" height="12" uuid="2fe1b87b-e8e9-4f73-8146-aa7967de61f8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="21" width="100" height="12" uuid="caa386f9-a01e-4129-9b5f-9cf0980d261c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de impresión:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" pattern="dd-MM-yyyy">
+				<reportElement x="450" y="21" width="120" height="12" uuid="af6f8562-c97a-4898-979b-a21d5b257853"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

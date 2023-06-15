@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c19e47c5-de9a-4343-b45b-3eb143a03b0b" name="smartin@produccion" url="http://35.169.183.61">
+        <fileTransfer host="35.169.183.61" port="22" privateKey="C:\Users\heyne\Desktop\San Martin\PoS.pem" rootFolder="/home/ubuntu" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="449c30d7-e52e-4210-9be6-30cdbac4b615" name="gbbb@produccion" url="http://52.2.85.194">
+        <fileTransfer host="52.2.85.194" port="22" privateKey="C:\Users\heyne\Desktop\Boutique\Production_CS.pem" rootFolder="/home/ubuntu" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
